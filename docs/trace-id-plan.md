@@ -216,5 +216,5 @@ def configure_logging(level: int = logging.INFO) -> None:
 ## Фактическая проверка (выполнено локально)
 
 План был реализован во всех трёх сервисах и провалидирован:
-- `make check` + `make test` — auth-service и search-service чистые; ad-service падает на `make check` только из-за pre-existing долга в `bin/seed.py` (файл не менялся). Все тесты зелёные: 34 (auth) + 55 (ad) + 23 (search) = 112 passed.
+- `make check` + `make test` — все три сервиса чистые. Все тесты зелёные: 34 (auth) + 55 (ad) + 23 (search) = 112 passed.
 - Сквозной e2e-прогон с поднятым docker-инфра (Postgres × 3, Redpanda) и всеми 5 процессами: `X-Trace-Id: my-test-trace-e2e`, отправленный в `POST /ads`, дошёл через outbox → Kafka → search-service consumer → обратный HTTP-вызов к ad-service (обогащение имени через auth-service) → `GET /search` — один и тот же id виден во всех логах и во всех ответах.
